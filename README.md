@@ -15,7 +15,7 @@ To use [scrub.sh](scrub.sh) to scrub GHE urls:
 
 ### Add environment variable
 
-1. Copy `[.env_SAMPLE](.env_SAMPLE)` to your project's root.
+1. Copy [`.env_SAMPLE`](.env_SAMPLE) to your project's root.
 1. Rename `.env_SAMPLE` to `.env`.
 1. Edit `fake.ghe.url` to point to the real GHE url (do not include `https://`).
 1. `cd` into your project repo root to activate the new environment variable. You should receive a warning and then a confirmation message: 
