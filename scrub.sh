@@ -13,7 +13,7 @@ if [ "$git_log_output_source" = "" ]; then
     echo "Success! No GHE references found in your source code."
 else
     echo "Found GHE references in source code. Scrubbing..."
-    git filter-branch --force --tree-filter "find . -type f -exec grep -I -l -q . {} \; -print0 | xargs -0 sed -i '' 's/$GHE_URL/fake.ghe.domain/g'" --tag-name-filter cat -- --all
+    git filter-branch --force --tree-filter "find . -type f -exec grep -I -l -q . {} \; -print0 | LC_ALL=C xargs -0 sed -i '' 's/$GHE_URL/fake.ghe.domain/g'" --tag-name-filter cat -- --all
     take_out_trash
 fi
 
@@ -21,7 +21,7 @@ fi
 git_log_output_commits=$(git --no-pager log --grep=$GHE_URL --all)
 
 edit_commit_messages () {
-    git filter-branch -f --msg-filter 'sed "s/'$GHE_URL'/fake.ghe.domain/g"' --tag-name-filter cat -- --all
+    git filter-branch -f --msg-filter 'LC_ALL=C sed "s/'$GHE_URL'/fake.ghe.domain/g"' --tag-name-filter cat -- --all
 }
 
 confirm_continue () {
