@@ -54,7 +54,15 @@ git checkout feature-branch
 git rebase master
 ```
 
+## Troubleshooting
 
+If you get the following error when running `scrub.sh`:
+
+> sed: first RE may not be empty
+
+> msg filter failed
+
+You did not activate the environment variable for the GHE url. Make sure you [update the GHE_URL variable and activate it](#add-environment-variable).
 
 ## How to test the software
 
