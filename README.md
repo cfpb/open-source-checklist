@@ -22,10 +22,6 @@ To use [scrub.sh](scrub.sh) to scrub GHE urls:
 
 ![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot-env.png)
 
-## Configuration
-
-1. step 1
-
 ## Usage
 
 1. In Terminal, from project root, run:
