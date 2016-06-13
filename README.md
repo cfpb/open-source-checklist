@@ -30,11 +30,30 @@ To use [scrub.sh](scrub.sh) to scrub GHE urls:
 
 1. In Terminal, from project root, run:
 
-```bash
+  ```bash
 sh ./scrub.sh
+  ```
+![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot-scrub-success.png)
+1. Force push your repo with tags:
+
+  ```bash
+  git push <remote> <branch> -f --tags
+  ```
+1. Remember to tell your collaborators to clone a fresh copy!
+
+**Note:** If collaborators have branches that they’d like to maintain separately, they will need to fetch and rebase from your updated remote. This must be done via rebase, not merge.
+
+If a collaborator is just mirroring the upstream repo with their fork, they can simply delete their local copy and clone a new one.
+
+### Rebase steps
+
+Only use if you must keep a branch that you're working with locally:
+
+```
+git checkout feature-branch
+git rebase master
 ```
 
-![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot-scrub-success.png)
 
 
 ## How to test the software
