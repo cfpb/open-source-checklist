@@ -28,7 +28,7 @@ To use [scrub.sh](scrub.sh) to scrub GHE urls:
 1. In Terminal, from project root, run:
 
   ```bash
-sh ./scrub.sh
+./scrub.sh
   ```
 ![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot-scrub-success.png)
 1. Force push your repo with tags:
