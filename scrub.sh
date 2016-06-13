@@ -21,7 +21,7 @@ fi
 git_log_output_commits=$(git --no-pager log --grep=$GHE_URL --all)
 
 edit_commit_messages () {
-    git filter-branch -f --msg-filter 'sed "s/'$GHE_URL'/fake.ghe.domain/g"' -- --all
+    git filter-branch -f --msg-filter 'sed "s/'$GHE_URL'/fake.ghe.domain/g"' --tag-name-filter cat -- --all
 }
 
 confirm_continue () {
