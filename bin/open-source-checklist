@@ -6,6 +6,6 @@ var program  = require('commander');
 require('../cmds/check-it.js')(program);
 
 program
-  .version('0.1')
+  // .version('1.0')
   .option('-f, --fix', 'Automatically fix any issues.')
   .parse(process.argv);

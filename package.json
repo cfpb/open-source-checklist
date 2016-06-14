@@ -1,16 +1,15 @@
 {
   "name": "open-source-checklist",
-  "version": "0.1",
   "description": "check internal repos against open source checklist requirements",
   "bin": {
-    "open-source-checklist": "./bin/open-source-checklist"
+    "check-it": "./bin/open-source-checklist"
   },
   "scripts": {
     "test": "mocha -R spec"
   },
   "author": {
     "name": "Catherine Farman",
-    "email": "catherine.farman@cfpb.gov",
+    "email": "catherine.farman@cfpb.gov"
   },
   "repository": {
     "type": "git",
