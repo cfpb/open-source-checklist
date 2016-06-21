@@ -2,7 +2,7 @@
 
 Automating CFPB's [Open Source Checklist](https://github.com/cfpb/open-source-project-template/blob/master/opensource-checklist.md) for easy release of internal source code.
 
-![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot.png)
+![](https://raw.githubusercontent.com/cfpb/open-source-checklist/master/screenshot.png)
 
 
 ## Dependencies
@@ -21,7 +21,7 @@ To use [scrub.sh](scrub.sh) to scrub GHE urls:
 1. Edit `fake.ghe.url` to point to the real GHE url (do not include `https://`).
 1. `cd` into your project repo root to activate the new environment variable. You should receive a warning and then a confirmation message: 
 
-![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot-env.png)
+![](https://raw.githubusercontent.com/cfpb/open-source-checklist/master/screenshot-env.png)
 
 ## Usage
 
@@ -30,7 +30,7 @@ To use [scrub.sh](scrub.sh) to scrub GHE urls:
   ```bash
 ./scrub.sh
   ```
-![](https://raw.githubusercontent.com/cfpb/open-source-project-template/master/screenshot-scrub-success.png)
+![](https://raw.githubusercontent.com/cfpb/open-source-checklist/master/screenshot-scrub-success.png)
 1. Force push your repo with tags:
 
   ```bash
