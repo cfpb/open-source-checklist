@@ -61,7 +61,7 @@ function checkCHANGELOG(cb) {
 function scrubGHEReferences(cb) {
   if (scrub) {
     fs.readFile(path.join(location, './.env'), 'utf8', function (err, data) {
-      if (err) return handleIssue(5, cb);
+      if (err) return handleIssue(4, cb);
       var envPath = path.join(location, './.env');
       shell.exec('. ' + envPath);
     });
@@ -104,23 +104,6 @@ function handleIssue(type, cb, data) {
       cb('No CHANGELOG.md file found. Please create one based on the Open Source Project Template: https://github.com/cfpb/open-source-project-template/blob/master/CHANGELOG.md', null);
       break;
     case 4:
-      if (fix) {
-        return npm.load({loglevel: 'error'}, function(err, npm) {
-          if (err) return logger.error(err);
-          npm.commands.install([], function(err) {
-            if (err) return logger.error(err);
-            npm.commands.shrinkwrap([], true, function(err) {
-              if (err) {
-                return cb('Shrinkwrapping failed. :( Try manually doing it by cd\'ing to the directory and running `npm shrinkwrap`.', null);
-              }
-              return cb(null, 'I reinstalled and shrinkwrapped your dependencies for you.');
-            });
-          });
-        });
-      }
-      cb('Please shrinkwrap your dependencies by running `npm shrinkwrap`.', null);
-      break;
-    case 5:
       if (fix) {
         request('https://raw.githubusercontent.com/cfpb/open-source-checklist/master/.env_SAMPLE')
           .on('error', function(err) {
