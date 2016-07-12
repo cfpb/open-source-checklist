@@ -5,8 +5,10 @@ var path = require('path');
 var request = require('request');
 var logger = require('winston-color');
 var npm = require('npm');
+var shell = require("shelljs");
 
 var fix = false;
+var scrub = false;
 var location, failure, manifest;
 
 module.exports = function(program) {
@@ -17,7 +19,8 @@ module.exports = function(program) {
     .action(function(loc) {
       location = loc || '.';
       fix = program.fix;
-      [checkPII, checkTERMS, checkCONTRIBUTING, checkCHANGELOG].forEach(function(func) {
+      scrub = program.scrub;
+      [checkPII, checkTERMS, checkCONTRIBUTING, checkCHANGELOG, scrubGHEReferences].forEach(function(func) {
         func(function(err, msg) {
           if (err) {
             return logger.error(err);
@@ -37,7 +40,7 @@ function checkPII(cb) {
 function checkTERMS(cb) {
   fs.readFile(path.join(location, './TERMS.md'), 'utf8', function (err, data) {
     if (err) return handleIssue(1, cb);
-    cb(null, 'Your `TERMS.md` file looks good.');
+    cb(null, 'Your TERMS.md file looks good.');
   });
 }
 
@@ -53,6 +56,16 @@ function checkCHANGELOG(cb) {
     if (err) return handleIssue(3, cb);
     cb(null, 'Your CHANGELOG.md file is good to go.');
   });
+}
+
+function scrubGHEReferences(cb) {
+  if (scrub) {
+    fs.readFile(path.join(location, './.env'), 'utf8', function (err, data) {
+      if (err) return handleIssue(5, cb);
+      var envPath = path.join(location, './.env');
+      shell.exec('. ' + envPath);
+    });
+  }
 }
 
 function handleIssue(type, cb, data) {
@@ -106,6 +119,17 @@ function handleIssue(type, cb, data) {
         });
       }
       cb('Please shrinkwrap your dependencies by running `npm shrinkwrap`.', null);
+      break;
+    case 5:
+      if (fix) {
+        request('https://raw.githubusercontent.com/cfpb/open-source-checklist/master/.env_SAMPLE')
+          .on('error', function(err) {
+            cb(err, null)
+          })
+          .pipe(fs.createWriteStream(path.join(location, './.env')))
+        return cb(null, 'No .env file found. I created one for you. Now add it to your project\'s .gitignore! Then you can update the GHE_URL variable.');
+      }
+      cb('No .env file found. Please create one based on this sample, add it to your project\'s .gitignore,and update the GHE_URL variable: https://github.com/cfpb/open-source-checklist/blob/master/.env_SAMPLE', null);
       break;
   }
 }
