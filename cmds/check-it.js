@@ -20,7 +20,7 @@ module.exports = function(program) {
       location = loc || '.';
       fix = program.fix;
       scrub = program.scrub;
-      [checkPII, checkTERMS, checkCONTRIBUTING, checkCHANGELOG, scrubGHEReferences].forEach(function(func) {
+      [checkPII, checkTERMS, checkCONTRIBUTING, checkCHANGELOG].forEach(function(func) {
         func(function(err, msg) {
           if (err) {
             return logger.error(err);
@@ -64,6 +64,8 @@ function scrubGHEReferences(cb) {
       if (err) return handleIssue(4, cb);
       var envPath = path.join(location, './.env');
       shell.exec('. ' + envPath);
+      // do the thing
+      shell.exec('./scrub.sh');
     });
   }
 }
