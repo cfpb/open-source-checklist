@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+'use strict';
+
+var program  = require('commander');
+
+require('../cmds/check-it.js')(program);
+
+program
+  // .version('1.0')
+  .option('-f, --fix', 'Automatically fix any issues.')
+  .option('-s, --scrub', 'Automatically scrub internal URLs from Git history.')
+  .parse(process.argv);
