@@ -20,9 +20,9 @@ module.exports = function(program) {
       location = loc || '.';
       fix = program.fix;
       scrub = program.scrub;
-      [checkPII, checkTERMS, checkCONTRIBUTING, checkCHANGELOG].forEach(function(func) {
+      [checkPII, checkTERMS, checkCONTRIBUTING, checkCHANGELOG, checkENV].forEach(function(func) {
         func(function(err, msg) {
-          if (err) {
+          if (err) {  
             return logger.error(err);
             process.exit(1);
           }
@@ -58,15 +58,19 @@ function checkCHANGELOG(cb) {
   });
 }
 
-function scrubGHEReferences(cb) {
-  if (scrub) {
-    fs.readFile(path.join(location, './.env'), 'utf8', function (err, data) {
+function checkENV(cb) {
+  fs.readFile(path.join(location, './.env'), 'utf8', function (err, data) {
       if (err) return handleIssue(4, cb);
       var envPath = path.join(location, './.env');
       shell.exec('. ' + envPath);
-      // do the thing
-      shell.exec('./scrub.sh');
     });
+}
+
+function scrubGHEReferences(cb) {
+  if (scrub) {
+    // checkENV(cb);
+    //   // do the thing
+    //   shell.exec('./scrub.sh');
   }
 }
 
@@ -111,10 +115,13 @@ function handleIssue(type, cb, data) {
           .on('error', function(err) {
             cb(err, null)
           })
-          .pipe(fs.createWriteStream(path.join(location, './.env')))
-        return cb(null, 'No .env file found. I created one for you. Now add it to your project\'s .gitignore! Then you can update the GHE_URL variable.');
+          .pipe(
+            fs.createWriteStream(path.join(location, './.env')
+          ))
+          fs.appendFileSync(path.join(location, './.gitignore'), '.env', 'utf8');
+        return cb(null, 'No .env file found. I created one for you and added it to your project\'s .gitignore. Now you should edit it to update the GHE_URL variable.');
       }
-      cb('No .env file found. Please create one based on this sample, add it to your project\'s .gitignore,and update the GHE_URL variable: https://github.com/cfpb/open-source-checklist/blob/master/.env_SAMPLE', null);
+      cb('No .env file found. Please create one based on this sample, add it to your project\'s .gitignore, and update the GHE_URL variable: https://github.com/cfpb/open-source-checklist/blob/master/.env_SAMPLE', null);
       break;
   }
 }
