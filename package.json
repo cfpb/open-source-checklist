@@ -19,8 +19,8 @@
   "bugs": "https://github.com/cfpb/open-source-checklist/issues",
   "dependencies": {
     "commander": "2.9.0",
-    "npm": "3.8.6",
-    "request": "2.70.0",
+    "npm": "5.7.1",
+    "request": "2.82.0",
     "shelljs": "^0.7.0",
     "update-notifier": "0.6.3",
     "winston-color": "1.0.0"
