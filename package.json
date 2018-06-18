@@ -5,7 +5,9 @@
     "check-it": "./bin/open-source-checklist"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha -R spec",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": {
     "name": "Catherine Farman",
@@ -23,9 +25,11 @@
     "request": "2.82.0",
     "shelljs": "^0.7.0",
     "update-notifier": "0.6.3",
-    "winston-color": "1.0.0"
+    "winston-color": "1.0.0",
+    "snyk": "^1.83.0"
   },
   "devDependencies": {
     "mocha": "^2.4.5"
-  }
+  },
+  "snyk": true
 }
